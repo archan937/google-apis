@@ -4,8 +4,8 @@ require File.expand_path("../lib/google_apis/version", __FILE__)
 Gem::Specification.new do |gem|
   gem.author        = "Paul Engel"
   gem.email         = "pm_engel@icloud.com"
-  gem.summary       = %q{A thin layer on top of Google::API::Client for a more intuitive way of working (e.g. with BigQuery)}
-  gem.description   = %q{A thin layer on top of Google::API::Client for a more intuitive way of working (e.g. with BigQuery)}
+  gem.summary       = %q{A thin layer on top of Google::APIClient (google-api-client) for a more intuitive way of working (e.g. with BigQuery)}
+  gem.description   = %q{A thin layer on top of Google::APIClient (google-api-client) for a more intuitive way of working (e.g. with BigQuery)}
   gem.homepage      = "https://github.com/archan937/google-apis"
 
   gem.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
