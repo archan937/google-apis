@@ -1,0 +1,12 @@
+#!/usr/bin/env ruby
+
+require "bundler"
+Bundler.require :default, :development
+
+if File.exists?(config = "script/config.yml")
+  require "yaml"
+  GoogleApis.connect YAML.load_file(config)
+end
+
+puts "Loading Google APIs development environment (#{GoogleApis::VERSION})"
+Pry.start
