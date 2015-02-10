@@ -11,7 +11,6 @@ module GoogleApis
 
   def self.connect(options)
     @connection = Connection.new options
-    true
   end
 
   def self.connection

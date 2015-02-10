@@ -27,6 +27,14 @@ module GoogleApis
           end
         end
 
+        def connect(options)
+          @connection = new(options)
+        end
+
+        def connection
+          @connection
+        end
+
         def name
           @name
         end

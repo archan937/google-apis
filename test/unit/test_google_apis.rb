@@ -19,7 +19,7 @@ module Unit
         end
 
         it "instantiates a connection" do
-          GoogleApis::Connection.expects(:new).with(@options)
+          GoogleApis::Connection.expects(:new).with(@options).returns(true)
           assert_equal true, GoogleApis.connect(@options)
         end
 

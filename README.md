@@ -44,6 +44,8 @@ Do not forget to download the private key by generating a P12 key file.
 ...
 ```
 
+#### Easy API discovery info
+
 GoogleApis quickly displays the resources and methods a certain API provides.
 
 ```ruby
@@ -61,6 +63,32 @@ GoogleApis quickly displays the resources and methods a certain API provides.
  "request"=>{"$ref"=>"QueryRequest"},
  "response"=>{"$ref"=>"QueryResponse"},
  "scopes"=>["https://www.googleapis.com/auth/bigquery", "https://www.googleapis.com/auth/cloud-platform"]}
+```
+
+#### Application-wide API connections (e.g. Google::BigQuery.connection)
+
+You can also configure an application-wide API connection. Let's say you also stored the connection configuration in `config/bigquery.yml`:
+
+```yaml
+---
+  email_address: lorem@developer.gserviceaccount.com
+  private_key: "/path/to/private/key.p12"
+  projectId: your_project_id
+  datasetId: your_dataset_id
+```
+
+```ruby
+[1] pry(main)> require "yaml"
+=> true
+[2] pry(main)> Google::BigQuery.connect YAML.load_file("config/bigquery.yml")
+=> #<Google::BigQuery:0x007fdc1c6823b0 v2:[datasets,jobs,projects,tabledata,tables] {projectId:"your_project_id",datasetId:"your_dataset_id"}>
+[3] pry(main)> Google::BigQuery.connection.jobs
+=> #<Google::BigQuery::Resource:0x007fdc1e94d5c0 v2:jobs:[get,getQueryResults,insert,list,query]>
+[4] pry(main)> Google::BigQuery.connection.select_rows "SELECT * FROM [your_dataset_id.awesome_table_19820801] LIMIT 2"
+=> [["1982-08-01", "Paul is awesome", "Paul", "Engel", 19],
+ ["1982-08-01", "GoogleApis is cool", "Google", "Apis", 82],
+ ["1982-08-01", "Hello world!", "Foo", "Bar", 8],
+ ["1982-08-01", "Try out this gem :)", "It's", "very easy", 1]]
 ```
 
 ### Using the console
@@ -111,6 +139,7 @@ Please feel free to fork this repository and send in pull requests to help impro
 
 ### TODO
 
+* Add more Google API definitions (see [google-apis/lib/google_apis/api](https://github.com/archan937/google-apis/tree/master/lib/google_apis/api))
 * Add more tests
 
 ### License
