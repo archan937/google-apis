@@ -28,11 +28,15 @@ module GoogleApis
         end
 
         def connect(options = {})
-          @connection = new(options)
+          @instance = new(options)
+        end
+
+        def instance
+          @instance
         end
 
         def connection
-          @connection
+          instance
         end
 
         def name
@@ -48,8 +52,8 @@ module GoogleApis
         end
 
         def method_missing(name, *args)
-          if connection && (connection.class.instance_methods(false).include?(name) || connection.send(:find, name))
-            connection.send(name, *args)
+          if instance && (instance.class.instance_methods(false).include?(name) || instance.send(:find, name))
+            instance.send(name, *args)
           else
             super
           end
