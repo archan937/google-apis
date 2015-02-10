@@ -14,6 +14,7 @@ Gem::Specification.new do |gem|
   gem.name          = "google-apis"
   gem.require_paths = ["lib"]
   gem.version       = GoogleApis::VERSION
+  gem.licenses      = ["MIT"]
 
   gem.add_dependency "google-api-client", "~> 0.8.2"
 
