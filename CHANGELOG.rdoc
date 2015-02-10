@@ -1,5 +1,12 @@
 = Google APIs CHANGELOG
 
+== Version 0.1.1 (February 10, 2015)
+
+* Fixed bug: made options optional when invoking `.connect`
+* Overridden GoogleApis::Connection.inspect for better info
+* Fixed switching APIs using one global connection
+* Being able to delegate resource invocation on API class to its connection
+
 == Version 0.1.0 (February 10, 2015)
 
 * Initial release
