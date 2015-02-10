@@ -43,6 +43,10 @@ module GoogleApis
       parse! @client.execute(options)
     end
 
+    def inspect
+      "#<#{self.class}:#{object_hexid} [#{@asserter.issuer}]>"
+    end
+
   private
 
     def authenticate!(api)
