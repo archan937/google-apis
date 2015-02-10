@@ -16,7 +16,7 @@ module GoogleApis
 
       @asserter = Google::APIClient::JWTAsserter.new(
         options[:email_address],
-        nil,
+        "",
         key
       )
     end
@@ -50,8 +50,8 @@ module GoogleApis
   private
 
     def authenticate!(api)
-      if !@client.authorization.access_token || @client.authorization.expired?
-        @asserter.scope = api.auth_scope
+      if !@asserter.scope.include?(api.auth_scope) || @client.authorization.expired?
+        @asserter.scope = (@asserter.scope.split(" ") << api.auth_scope).uniq
         @client.authorization = @asserter.authorize
       end
     end

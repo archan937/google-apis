@@ -13,7 +13,7 @@ module Unit
 
           File.expects(:open).with("< private_key >", "rb").returns("< file >")
           Google::APIClient::PKCS12.expects(:load_key).with("< file >", "notasecret").returns("< key >")
-          Google::APIClient::JWTAsserter.expects(:new).with("< email_address >", nil, "< key >").returns("< asserter >")
+          Google::APIClient::JWTAsserter.expects(:new).with("< email_address >", "", "< key >").returns("< asserter >")
 
           connection = GoogleApis::Connection.new(
             :email_address => "< email_address >",
