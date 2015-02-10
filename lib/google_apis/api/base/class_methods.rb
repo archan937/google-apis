@@ -47,6 +47,14 @@ module GoogleApis
           name
         end
 
+        def method_missing(name, *args)
+          if connection && (connection.class.instance_methods(false).include?(name) || connection.send(:find, name))
+            connection.send(name, *args)
+          else
+            super
+          end
+        end
+
       end
     end
   end

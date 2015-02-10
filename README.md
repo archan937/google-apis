@@ -86,9 +86,9 @@ You can also configure an application-wide API connection. Let's say you also st
 => true
 [2] pry(main)> Google::BigQuery.connect YAML.load_file("config/bigquery.yml")
 => #<Google::BigQuery:0x007fdc1c6823b0 v2:[datasets,jobs,projects,tabledata,tables] {projectId:"your_project_id",datasetId:"your_dataset_id"}>
-[3] pry(main)> Google::BigQuery.connection.jobs
+[3] pry(main)> Google::BigQuery.jobs
 => #<Google::BigQuery::Resource:0x007fdc1e94d5c0 v2:jobs:[get,getQueryResults,insert,list,query]>
-[4] pry(main)> Google::BigQuery.connection.select_rows "SELECT * FROM [your_dataset_id.awesome_table_19820801] LIMIT 4"
+[4] pry(main)> Google::BigQuery.select_rows "SELECT * FROM [your_dataset_id.awesome_table_19820801] LIMIT 4"
 => [["1982-08-01", "Paul is awesome", "Paul", "Engel", 19],
  ["1982-08-01", "GoogleApis is cool", "Google", "Apis", 82],
  ["1982-08-01", "Hello world!", "Foo", "Bar", 8],
@@ -104,7 +104,7 @@ Please make sure that you also have created a "Public API access" server key and
 ```ruby
 [1] pry(main)> Google::Drive.connect :email_address => "lorem@developer.gserviceaccount.com", :private_key => "/path/to/private/key.p12"
 => #<Google::Drive:0x007f83ee39fcc8 v2:[about,apps,changes,channels,children,comments,files,parents,permissions,properties,realtime,replies,revisions] {}>
-[2] pry(main)> Google::Drive.connection.files.list
+[2] pry(main)> Google::Drive.files.list
 => {"kind"=>"drive#fileList",
  "etag"=>"\"4GaIn/LoR3M-1pSuM-D0loR-s1T-AM3t\"",
  "selfLink"=>"https://www.googleapis.com/drive/v2/files",
@@ -123,12 +123,12 @@ If it isn't already clear, you can specify a global Google API connection and us
 => #<GoogleApis::Connection:0x007ffe0aa95d70 [lorem@developer.gserviceaccount.com]>
 [2] pry(main)> Google::Drive.connect
 => #<Google::Drive:0x007fcfec1265b0 v2:[about,apps,changes,channels,children,comments,files,parents,permissions,properties,realtime,replies,revisions] {}>
-[3] pry(main)> Google::Drive.connection.files.list
+[3] pry(main)> Google::Drive.files.list
 => {"kind"=>"drive#fileList",
 ...
 [4] pry(main)> Google::BigQuery.connect :projectId => "your_project_id", :datasetId => "your_dataset_id"
 => #<Google::BigQuery:0x007ffe0b1fb240 v2:[datasets,jobs,projects,tabledata,tables] {projectId:"your_project_id",datasetId:"your_dataset_id"}>
-[5] pry(main)> Google::BigQuery.connection.tables.list
+[5] pry(main)> Google::BigQuery.tables.list
 => {"kind"=>"bigquery#tableList",
 ...
 ```
