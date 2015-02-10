@@ -1,5 +1,5 @@
 = Google APIs CHANGELOG
 
-== Version 0.1.0 (January xx, 2015)
+== Version 0.1.0 (February 10, 2015)
 
 * Initial release
