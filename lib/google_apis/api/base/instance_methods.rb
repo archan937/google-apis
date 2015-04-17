@@ -22,6 +22,10 @@ module GoogleApis
           connection.execute self.class, api_method, *params
         end
 
+        def download(uri, to = nil)
+          connection.download self.class, uri, to
+        end
+
         def inspect
           "#<#{self.class}:#{object_hexid} #{discovered_api.version}:[#{discovered_api.discovered_resources.collect(&:name).sort.join(",")}] {#{@default_params.collect{|k, v| "#{k}:#{v.inspect}"}.join(",")}}>"
         end

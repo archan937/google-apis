@@ -1,3 +1,5 @@
+require "uri"
+
 module GoogleApis
   class Connection
 
@@ -41,6 +43,17 @@ module GoogleApis
       options.merge!(top_level) if top_level
 
       parse! @client.execute(options)
+    end
+
+    def download(api, uri, to = nil)
+      authenticate!(api)
+
+      response = @client.execute Google::APIClient::Request.new(:uri => uri)
+      to ||= File.basename CGI.unescape(URI.parse(uri).path)
+
+      File.open(to, "wb") do |file|
+        file.write response.body
+      end
     end
 
     def inspect

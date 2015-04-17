@@ -52,7 +52,7 @@ module GoogleApis
         end
 
         def method_missing(name, *args)
-          if instance && (instance.class.instance_methods(false).include?(name) || instance.send(:find, name))
+          if instance && (instance.respond_to?(name) || instance.send(:find, name))
             instance.send(name, *args)
           else
             super
