@@ -1,5 +1,10 @@
 = Google APIs CHANGELOG
 
+== Version 0.1.2 (April 17, 2015)
+
+* Added Google Storage API definition
+* Being able to download files from Google Storage ^^
+
 == Version 0.1.1 (February 10, 2015)
 
 * Fixed bug: made options optional when invoking `.connect`

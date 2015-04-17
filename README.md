@@ -97,6 +97,41 @@ You can also configure an application-wide API connection. Let's say you also st
 
 Please note that `Google::BigQuery.connection` is provided with several methods resembling ActiveRecord: `#select_rows`, `#select_values` and `#select_value`.
 
+##### Google::Storage.connection
+
+The following example demonstrates how to download a file from Google Storage:
+
+```ruby
+[1] pry(main)> Google::Storage.connect :email_address => "lorem@developer.gserviceaccount.com", :private_key => "/path/to/private/key.p12"
+=> #<Google::Storage:0x007fe522024f68 v1:[bucketAccessControls,buckets,channels,defaultObjectAccessControls,objectAccessControls,objects] {}>
+[2] pry(main)> metadata = Google::Storage.objects.list :bucket => "your-bucket", :prefix => "path/to/your/file/awesome.tsv"
+=> {"kind"=>"storage#objects",
+ "items"=>
+  [{"kind"=>"storage#object",
+    "id"=>"your-bucket/path/to/your/file/awesome.tsv/1425499569141000",
+    "selfLink"=>"https://www.googleapis.com/storage/v1/b/your-bucket/o/path%2Fto%2Fyour%2Ffile%2Fawesome.tsv",
+    "name"=>"path/to/your/file/awesome.tsv",
+    "bucket"=>"your-bucket",
+    "generation"=>"1425499569141000",
+    "metageneration"=>"1",
+    "contentType"=>"text/tab-separated-values",
+    "updated"=>"2015-03-04T20:06:09.141Z",
+    "storageClass"=>"STANDARD",
+    "size"=>"5592792",
+    "md5Hash"=>"od4vAFihlDLs1k9kgo+U4CXhQ==",
+    "mediaLink"=>"https://www.googleapis.com/download/storage/v1/b/your-bucket/o/path%2Fto%2Fyour%2Ffile%2Fawesome.tsv?generation=1425499569141000&alt=media",
+    "owner"=>{"entity"=>"user-00b4903a97b10389ce680ca45ba5999e068c4d0c8ccbbfbb7094238bc85a567", "entityId"=>"00b4903a97b20004ce680ca5f5aeebe068c4d0c8ccbbfbb7094266d1b9787457"},
+    "crc32c"=>"P4UlsJQ==",
+    "etag"=>"EN93lyNu/j8QCEAE="}]}
+[3] pry(main)> Google::Storage.download metadata["items"][0]["mediaLink"]
+=> 5592792
+[4] pry(main)> puts `ls -l | grep awesome`
+-rw-rw-r--  1 paulengel  paulengel  5592792 Apr 17 16:38 awesome.tsv
+=> nil
+```
+
+Easy, huh? :)
+
 ##### Google::Drive.connection
 
 Please make sure that you also have created a "Public API access" server key and added your IP to the allowed IPs at the [API credentials page](https://console.developers.google.com/project/your_project_id/apiui/credential).
