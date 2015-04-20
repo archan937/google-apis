@@ -99,7 +99,7 @@ Please note that `Google::BigQuery.connection` is provided with several methods 
 
 ##### Google::Storage.connection
 
-The following example demonstrates how to download a file from Google Storage:
+The following example demonstrates how to download and upload a file from Google Storage:
 
 ```ruby
 [1] pry(main)> Google::Storage.connect :email_address => "lorem@developer.gserviceaccount.com", :private_key => "/path/to/private/key.p12"
