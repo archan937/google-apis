@@ -6,14 +6,15 @@ module GoogleApis
         attr_accessor :connection, :discovered_api
 
         def initialize(options = {})
-          options = options.symbolize_keys
+          config, params = options.symbolize_keys.partition{|(k, v)| [:email_address, :private_key].include?(k)}.collect{|x| Hash[x]}
 
-          config, default_params = options.partition{|(k, v)| [:email_address, :private_key].include?(k)}.collect{|x| Hash[x] unless x.empty?}
-          @connection = config ? GoogleApis::Connection.new(config) : GoogleApis.connection
+          @connection = config.empty? ? GoogleApis.connection : GoogleApis::Connection.new(config)
           raise Error, "Please ensure a Google API connection" unless @connection
 
+          params = GoogleApis.config.merge(params).inject({}){|h, (k, v)| h[k.to_s.gsub(/_(.)/){$1.upcase}.to_sym] = v if v; h}
+
           @discovered_api = connection.discover_api self.class.api, self.class.version
-          @default_params = (default_params || {}).inject({}){|h, (k, v)| h[k.to_s.gsub(/_(.)/){$1.upcase}.to_sym] = v; h}
+          @default_params = params.select{|k, v| self.class.default_parameters.include?(k)}
         end
 
         def execute(api_method, *params)

@@ -27,12 +27,20 @@ module GoogleApis
           end
         end
 
+        def default_parameters(*keys)
+          if keys.any?
+            @default_parameters = keys
+          else
+            @default_parameters || []
+          end
+        end
+
         def connect(options = {})
           @instance = new(options)
         end
 
         def instance
-          @instance
+          @instance || (connect if GoogleApis.connection)
         end
 
         def connection

@@ -22,6 +22,12 @@ module Unit
             assert_equal "https://www.googleapis.com/auth/bigquery", GoogleApis::Api::BigQuery.auth_scope
           end
         end
+
+        describe ".default_parameters" do
+          it "returns the default API parameters" do
+            assert_equal [:projectId, :datasetId], GoogleApis::Api::BigQuery.default_parameters
+          end
+        end
       end
 
     end

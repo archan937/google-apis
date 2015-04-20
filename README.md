@@ -170,19 +170,30 @@ Please make sure that you also have created a "Public API access" server key and
 
 If it isn't already clear, you can specify a global Google API connection and use different APIs:
 
+```yaml
+---
+  email_address: lorem@developer.gserviceaccount.com
+  private_key: "/path/to/private/key.p12"
+  project_id: your_project_id
+  dataset_id: your_dataset_id
+  bucket: your_bucket
+```
+
 ```ruby
-[1] pry(main)> GoogleApis.connect :email_address => "lorem@developer.gserviceaccount.com", :private_key => "/path/to/private/key.p12"
+[1] pry(main)> require "yaml"
+=> true
+[2] pry(main)> GoogleApis.connect YAML.load_file("config/google-apis.yml")
 => #<GoogleApis::Connection:0x007ffe0aa95d70 [lorem@developer.gserviceaccount.com]>
-[2] pry(main)> Google::Drive.connect
-=> #<Google::Drive:0x007fcfec1265b0 v2:[about,apps,changes,channels,children,comments,files,parents,permissions,properties,realtime,replies,revisions] {}>
 [3] pry(main)> Google::Drive.files.list
 => {"kind"=>"drive#fileList",
 ...
-[4] pry(main)> Google::BigQuery.connect :project_id => "your_project_id", :dataset_id => "your_dataset_id"
+[4] pry(main)> Google::BigQuery.connection
 => #<Google::BigQuery:0x007ffe0b1fb240 v2:[datasets,jobs,projects,tabledata,tables] {projectId:"your_project_id",datasetId:"your_dataset_id"}>
 [5] pry(main)> Google::BigQuery.tables.list
 => {"kind"=>"bigquery#tableList",
 ...
+[6] pry(main)> Google::Storage.objects.list :prefix => "path/to/your/file/awesome.txt"
+=> {"kind"=>"storage#objects",
 ```
 
 ### Using the console
@@ -206,6 +217,8 @@ You can also define `script/config.yml` containing the connection config:
 ---
   email_address: lorem@developer.gserviceaccount.com
   private_key: "/path/to/private/key.p12"
+  project_id: your_project_id
+  dataset_id: your_dataset_id
 ```
 
 And immediately start instantiating a Google API:
@@ -213,7 +226,7 @@ And immediately start instantiating a Google API:
 ```ruby
 $ script/console
 Loading Google APIs development environment (0.1.3)
-[1] pry(main)> bq = Google::BigQuery.new :project_id => "your_project_id", :dataset_id => "your_dataset_id"
+[1] pry(main)> Google::BigQuery.connection
 => #<Google::BigQuery:0x007fa6c9cc3450 v2:[datasets,jobs,projects,tabledata,tables] {projectId:"your_project_id",datasetId:"your_dataset_id"}>
 ```
 

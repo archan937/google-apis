@@ -6,6 +6,7 @@ module GoogleApis
       api "bigquery"
       version 2
       auth_scope "https://www.googleapis.com/auth/bigquery"
+      default_parameters :projectId, :datasetId
 
       def project
         default_params[:projectId]
