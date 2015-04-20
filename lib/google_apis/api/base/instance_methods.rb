@@ -18,7 +18,7 @@ module GoogleApis
 
         def execute(api_method, *params)
           params[0] = (params[0] || {}).symbolize_keys
-          params[0].reverse_merge!(@default_params)
+          params[0].reverse_merge!(default_params)
           connection.execute self.class, api_method, *params
         end
 
@@ -27,7 +27,7 @@ module GoogleApis
         end
 
         def inspect
-          "#<#{self.class}:#{object_hexid} #{discovered_api.version}:[#{discovered_api.discovered_resources.collect(&:name).sort.join(",")}] {#{@default_params.collect{|k, v| "#{k}:#{v.inspect}"}.join(",")}}>"
+          "#<#{self.class}:#{object_hexid} #{discovered_api.version}:[#{discovered_api.discovered_resources.collect(&:name).sort.join(",")}] {#{default_params.collect{|k, v| "#{k}:#{v.inspect}"}.join(",")}}>"
         end
 
         def method_missing(name, *args)
@@ -39,6 +39,10 @@ module GoogleApis
         end
 
       private
+
+        def default_params
+          @default_params
+        end
 
         def find(name)
           discovered_api.discovered_resources.detect{|x| x.name == name.to_s}
