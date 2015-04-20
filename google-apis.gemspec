@@ -17,6 +17,7 @@ Gem::Specification.new do |gem|
   gem.licenses      = ["MIT"]
 
   gem.add_dependency "google-api-client", "~> 0.8.2"
+  gem.add_dependency "httpclient"
 
   gem.add_development_dependency "rake"
   gem.add_development_dependency "yard"
