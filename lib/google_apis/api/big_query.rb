@@ -7,6 +7,14 @@ module GoogleApis
       version 2
       auth_scope "https://www.googleapis.com/auth/bigquery"
 
+      def project
+        default_params[:projectId]
+      end
+
+      def dataset
+        default_params[:datasetId]
+      end
+
       def select_rows(statement)
         result = jobs.query :query => statement
         types = result["schema"]["fields"].collect{|x| x["type"].downcase.to_sym}
