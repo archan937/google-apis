@@ -10,7 +10,12 @@ module GoogleApis
   class Error < StandardError; end
 
   def self.connect(options)
-    @connection = Connection.new options
+    @config = options.symbolize_keys
+    @connection = Connection.new config
+  end
+
+  def self.config
+    @config || {}
   end
 
   def self.connection
