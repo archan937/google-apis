@@ -13,7 +13,7 @@ module GoogleApis
           raise Error, "Please ensure a Google API connection" unless @connection
 
           @discovered_api = connection.discover_api self.class.api, self.class.version
-          @default_params = default_params || {}
+          @default_params = (default_params || {}).inject({}){|h, (k, v)| h[k.to_s.gsub(/_(.)/){$1.upcase}.to_sym] = v; h}
         end
 
         def execute(api_method, *params)

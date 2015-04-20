@@ -25,7 +25,7 @@ Do not forget to download the private key by generating a P12 key file.
 ```ruby
 [1] pry(main)> GoogleApis.connect :email_address => "lorem@developer.gserviceaccount.com", :private_key => "/path/to/private/key.p12"
 => #<GoogleApis::Connection:0x007fa5a4743668 [lorem@developer.gserviceaccount.com]>
-[2] pry(main)> bq = Google::BigQuery.new :projectId => "your_project_id", :datasetId => "your_dataset_id"
+[2] pry(main)> bq = Google::BigQuery.new :project_id => "your_project_id", :dataset_id => "your_dataset_id"
 => #<Google::BigQuery:0x007fc5c68647a8 v2:[datasets,jobs,projects,tabledata,tables] {projectId:"your_project_id",datasetId:"your_dataset_id"}>
 [3] pry(main)> bq.tables.list
 => {"kind"=>"bigquery#tableList",
@@ -77,8 +77,8 @@ You can also configure an application-wide API connection. Let's say you also st
 ---
   email_address: lorem@developer.gserviceaccount.com
   private_key: "/path/to/private/key.p12"
-  projectId: your_project_id
-  datasetId: your_dataset_id
+  project_id: your_project_id
+  dataset_id: your_dataset_id
 ```
 
 ```ruby
@@ -161,7 +161,7 @@ If it isn't already clear, you can specify a global Google API connection and us
 [3] pry(main)> Google::Drive.files.list
 => {"kind"=>"drive#fileList",
 ...
-[4] pry(main)> Google::BigQuery.connect :projectId => "your_project_id", :datasetId => "your_dataset_id"
+[4] pry(main)> Google::BigQuery.connect :project_id => "your_project_id", :dataset_id => "your_dataset_id"
 => #<Google::BigQuery:0x007ffe0b1fb240 v2:[datasets,jobs,projects,tabledata,tables] {projectId:"your_project_id",datasetId:"your_dataset_id"}>
 [5] pry(main)> Google::BigQuery.tables.list
 => {"kind"=>"bigquery#tableList",
@@ -179,7 +179,7 @@ $ script/console
 Loading Google APIs development environment (0.1.0)
 [1] pry(main)> GoogleApis.connect :email_address => "", :private_key => "/path/to/private/key.p12"
 => #<GoogleApis::Connection:0x007ff3d356cbf0 [lorem@developer.gserviceaccount.com]>
-[2] pry(main)> bq = Google::BigQuery.new :projectId => "your_project_id", :datasetId => "your_dataset_id"
+[2] pry(main)> bq = Google::BigQuery.new :project_id => "your_project_id", :dataset_id => "your_dataset_id"
 => #<Google::BigQuery:0x007f8c09a05338 v2:[datasets,jobs,projects,tabledata,tables] {projectId:"your_project_id",datasetId:"your_dataset_id"}>
 ```
 
@@ -196,7 +196,7 @@ And immediately start instantiating a Google API:
 ```ruby
 $ script/console
 Loading Google APIs development environment (0.1.0)
-[1] pry(main)> bq = Google::BigQuery.new :projectId => "your_project_id", :datasetId => "your_dataset_id"
+[1] pry(main)> bq = Google::BigQuery.new :project_id => "your_project_id", :dataset_id => "your_dataset_id"
 => #<Google::BigQuery:0x007fa6c9cc3450 v2:[datasets,jobs,projects,tabledata,tables] {projectId:"your_project_id",datasetId:"your_dataset_id"}>
 ```
 
