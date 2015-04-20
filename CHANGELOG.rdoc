@@ -1,5 +1,11 @@
 = Google APIs CHANGELOG
 
+== Version 0.1.4 (April 21, 2015)
+
+* Introduced GoogleApis.config
+* Improved handling default API parameters
+* Auto-connecting to API when having a GoogleApis.connection available
+
 == Version 0.1.3 (April 20, 2015)
 
 * Camelizing underscored default param keys
