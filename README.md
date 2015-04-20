@@ -123,11 +123,28 @@ The following example demonstrates how to download a file from Google Storage:
     "owner"=>{"entity"=>"user-00b4903a97b10389ce680ca45ba5999e068c4d0c8ccbbfbb7094238bc85a567", "entityId"=>"00b4903a97b20004ce680ca5f5aeebe068c4d0c8ccbbfbb7094266d1b9787457"},
     "crc32c"=>"P4UlsJQ==",
     "etag"=>"EN93lyNu/j8QCEAE="}]}
-[3] pry(main)> Google::Storage.download metadata["items"][0]["mediaLink"]
+[3] pry(main)> Google::Storage.download metadata["items"][0]["mediaLink"], "foo/"
 => 5592792
-[4] pry(main)> puts `ls -l | grep awesome`
+[4] pry(main)> puts `ls -l foo | grep awesome`
 -rw-rw-r--  1 paulengel  paulengel  5592792 Apr 17 16:38 awesome.tsv
 => nil
+[5] pry(main)> Google::Storage.objects.insert :bucket => "your-bucket", :media => "path/to/your/local/awesome.file.gz", :directory => "awesome_directory"
+=> {"kind"=>"storage#object",
+ "id"=>"your-bucket/awesome_directory/awesome.file.gz/1429539088390000",
+ "selfLink"=>"https://www.googleapis.com/storage/v1/b/your-bucket/o/awesome_directory%2Fawesome.file.gz",
+ "name"=>"awesome_directory/awesome.file.gz",
+ "bucket"=>"your-bucket",
+ "generation"=>"1429539088390000",
+ "metageneration"=>"1",
+ "contentType"=>"text/plain",
+ "updated"=>"2015-04-20T14:11:28.390Z",
+ "storageClass"=>"STANDARD",
+ "size"=>"5898192",
+ "md5Hash"=>"82Pe0oFOTdC6nP86/K4fmA==",
+ "mediaLink"=>"https://www.googleapis.com/download/storage/v1/b/your-bucket/o/awesome_directory%2Fawesome.file.gz?generation=1429539088390000&alt=media",
+ "owner"=>{"entity"=>"user-00b49031947c40e21c1934ed03110ed7f71bfc2f8dd1982c257ad66d72e5d9a2", "entityId"=>"00b49031947c40e21c0e306d03110ed7f71bfc2f8dd1982c257ad66d72ea1934"},
+ "crc32c"=>"qPMe/Q==",
+ "etag"=>"ENGluYyIhcUCEAE="}
 ```
 
 Easy, huh? :)

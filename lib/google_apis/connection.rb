@@ -1,4 +1,5 @@
 require "uri"
+require "fileutils"
 
 module GoogleApis
   class Connection
@@ -28,32 +29,40 @@ module GoogleApis
     end
 
     def execute(api, api_method, *params)
-      authenticate!(api)
+      options, headers = params
 
-      nested, top_level = params
-
-      if nested
+      if options
         parameter_keys = (api_method.discovery_document["parameters"] || {}).keys.collect(&:to_sym)
-        parameters, body_object = nested.partition{|k, v| parameter_keys.include?(k)}.collect{|x| Hash[x] unless x.empty?}
+        media = options.delete(:media)
+        parameters, body_object = options.partition{|k, v| parameter_keys.include?(k)}.collect{|x| Hash[x]}
+      end
+
+      if media && media.is_a?(String)
+        parameters[:uploadType] = "resumable"
+        parameters[:name] ||= File.basename(media)
+        if directory = body_object.delete(:directory)
+          parameters[:name] = File.join(directory, parameters[:name])
+        end
+        media = Google::APIClient::UploadIO.new(media, `file --mime -b #{media}`.split(";")[0])
       end
 
       options = {:api_method => api_method}
-      options[:parameters] = parameters if parameters
-      options[:body_object] = body_object if body_object
-      options.merge!(top_level) if top_level
+      options[:parameters] = parameters unless parameters.empty?
+      options[:body_object] = body_object unless body_object.empty?
+      options[:media] = media if media
+      options.merge!(headers) if headers
 
-      parse! @client.execute(options)
+      parse! execute!(api, options)
     end
 
     def download(api, uri, to = nil)
-      authenticate!(api)
+      options = Google::APIClient::Request.new(:uri => uri)
 
-      response = @client.execute Google::APIClient::Request.new(:uri => uri)
-      to ||= File.basename CGI.unescape(URI.parse(uri).path)
-
-      File.open(to, "wb") do |file|
-        file.write response.body
+      if to.nil? || File.directory?(to) || to.match(/\/$/)
+        to = File.join *[to, File.basename(CGI.unescape(URI.parse(uri).path))].compact
       end
+
+      save! execute!(api, options), to
     end
 
     def inspect
@@ -61,6 +70,11 @@ module GoogleApis
     end
 
   private
+
+    def execute!(api, options)
+      authenticate!(api)
+      @client.execute(options)
+    end
 
     def authenticate!(api)
       if !@asserter.scope.include?(api.auth_scope) || @client.authorization.expired?
@@ -76,6 +90,13 @@ module GoogleApis
             raise Error, "#{error["code"]} #{error["message"]}"
           end
         end
+      end
+    end
+
+    def save!(response, to)
+      FileUtils.mkdir_p File.dirname(to)
+      File.open(to, "wb") do |file|
+        file.write(response.body)
       end
     end
 
