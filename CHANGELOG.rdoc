@@ -1,5 +1,14 @@
 = Google APIs CHANGELOG
 
+== Version 0.1.3 (April 20, 2015)
+
+* Camelizing underscored default param keys
+* Defined private #default_params
+* Defined Google::BigQuery.connection.project and Google::BigQuery.connection.dataset
+* Using HTTPClient as default Faraday adapter
+* Being able to (easily) upload to Google Storage
+* Improved downloading files from Google Storage
+
 == Version 0.1.2 (April 17, 2015)
 
 * Added Google Storage API definition
