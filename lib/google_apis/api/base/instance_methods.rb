@@ -11,14 +11,14 @@ module GoogleApis
           @connection = config.empty? ? GoogleApis.connection : GoogleApis::Connection.new(config)
           raise Error, "Please ensure a Google API connection" unless @connection
 
-          params = GoogleApis.config.merge(params).inject({}){|h, (k, v)| h[k.to_s.gsub(/_(.)/){$1.upcase}.to_sym] = v if v; h}
+          params = correct_params(GoogleApis.config.merge(params))
 
           @discovered_api = connection.discover_api self.class.api, self.class.version
           @default_params = params.select{|k, v| self.class.default_parameters.include?(k)}
         end
 
         def execute(api_method, *params)
-          params[0] = (params[0] || {}).symbolize_keys
+          params[0] = correct_params(params[0])
           params[0].reverse_merge!(default_params)
           connection.execute self.class, api_method, *params
         end
@@ -43,6 +43,10 @@ module GoogleApis
 
         def default_params
           @default_params
+        end
+
+        def correct_params(params)
+          params ? params.inject({}){|h, (k, v)| h[k.to_s.gsub(/_(.)/){$1.upcase}.to_sym] = v if v; h} : {}
         end
 
         def find(name)
