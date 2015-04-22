@@ -205,7 +205,7 @@ Run the following command in your console:
 
 ```ruby
 $ script/console
-Loading Google APIs development environment (0.1.4)
+Loading Google APIs development environment (0.1.5)
 [1] pry(main)> GoogleApis.connect :email_address => "lorem@developer.gserviceaccount.com", :private_key => "/path/to/private/key.p12"
 => #<GoogleApis::Connection:0x007ff3d356cbf0 [lorem@developer.gserviceaccount.com]>
 [2] pry(main)> bq = Google::BigQuery.new :project_id => "your_project_id", :dataset_id => "your_dataset_id"
@@ -226,7 +226,7 @@ And immediately start instantiating a Google API:
 
 ```ruby
 $ script/console
-Loading Google APIs development environment (0.1.4)
+Loading Google APIs development environment (0.1.5)
 [1] pry(main)> Google::BigQuery.connection
 => #<Google::BigQuery:0x007fa6c9cc3450 v2:[datasets,jobs,projects,tabledata,tables] {projectId:"your_project_id",datasetId:"your_dataset_id"}>
 ```
