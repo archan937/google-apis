@@ -19,7 +19,7 @@ module GoogleApis
 
         def execute(api_method, *params)
           params[0] = correct_params(params[0])
-          params[0].reverse_merge!(default_params)
+          params[0].reverse_merge! default_params(api_method)
           connection.execute self.class, api_method, *params
         end
 
@@ -41,8 +41,9 @@ module GoogleApis
 
       private
 
-        def default_params
-          @default_params
+        def default_params(api_method = nil)
+          parameters = api_method.parameters.collect(&:to_sym) if api_method
+          parameters ? @default_params.slice(*parameters) : @default_params
         end
 
         def correct_params(params)
