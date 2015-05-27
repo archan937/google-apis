@@ -1,5 +1,9 @@
 = Google APIs CHANGELOG
 
+== Version 0.1.6 (May 27, 2015)
+
+* Handling Google BigQuery NULL values correctly
+
 == Version 0.1.5 (April 22, 2015)
 
 * Also correcting passed params when invoking api#execute
