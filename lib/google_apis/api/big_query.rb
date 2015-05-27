@@ -39,7 +39,7 @@ module GoogleApis
     private
 
       def parse_value(type, value)
-        unless value == "NULL"
+        unless [nil, "NULL"].include?(value)
           case type
           when :string
             parse_string_value value
