@@ -43,7 +43,9 @@ module GoogleApis
         if directory = body_object.delete(:directory)
           parameters[:name] = File.join(directory, parameters[:name])
         end
-        media = Google::APIClient::UploadIO.new(media, `file --mime -b #{media}`.split(";")[0])
+        content_type = options[:contentType] || options[:mimeType] if options
+        content_type ||= `file --mime -b #{media}`.split(";")[0]
+        media = Google::APIClient::UploadIO.new media, content_type
       end
 
       options = {:api_method => api_method}
