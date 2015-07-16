@@ -1,5 +1,9 @@
 = Google APIs CHANGELOG
 
+== Version 0.1.7 (July 16, 2015)
+
+* Respecting (optionally) passed :content_type or :mime_type option when dealing with upload media
+
 == Version 0.1.6 (May 27, 2015)
 
 * Handling Google BigQuery NULL values correctly
