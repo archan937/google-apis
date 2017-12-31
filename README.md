@@ -248,7 +248,6 @@ Please feel free to fork this repository and send in pull requests to help impro
 ### TODO
 
 * Add more Google API definitions (see [google-apis/lib/google_apis/api](https://github.com/archan937/google-apis/tree/master/lib/google_apis/api))
-* Add more tests
 
 ### License
 
