@@ -252,7 +252,7 @@ Please feel free to fork this repository and send in pull requests to help impro
 
 ### License
 
-Copyright (c) 2015 Paul Engel, released under the MIT License
+Copyright (c) 2017 Paul Engel, released under the MIT License
 
 http://github.com/archan937 – http://twitter.com/archan937 – http://gettopup.com – pm_engel@icloud.com
 
