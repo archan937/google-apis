@@ -1,4 +1,5 @@
 require "google/api_client"
+require "googleauth"
 
 require "google_apis/core_ext"
 require "google_apis/connection"

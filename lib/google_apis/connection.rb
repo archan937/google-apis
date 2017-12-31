@@ -12,15 +12,9 @@ module GoogleApis
         :application_version => GoogleApis::VERSION
       )
 
-      key = Google::APIClient::PKCS12.load_key(
-        File.open(options[:private_key], "rb"),
-        options[:passphrase] || "notasecret"
-      )
-
-      @asserter = Google::APIClient::JWTAsserter.new(
-        options[:email_address],
-        "",
-        key
+      @client.authorization = Google::Auth::ServiceAccountCredentials.make_creds(
+        json_key_io: File.open(options[:private_key], "rb"),
+        scope: []
       )
     end
 
@@ -77,9 +71,9 @@ module GoogleApis
     end
 
     def authenticate!(api)
-      if !@asserter.scope.include?(api.auth_scope) || @client.authorization.expired?
-        @asserter.scope = (@asserter.scope.split(" ") << api.auth_scope).uniq
-        @client.authorization = @asserter.authorize
+      if !@client.authorization.scope.include?(api.auth_scope) || @client.authorization.expired?
+        @client.authorization.scope.push(api.auth_scope).uniq!
+        @client.authorization.fetch_access_token!
       end
     end
 

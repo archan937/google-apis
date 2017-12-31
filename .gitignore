@@ -6,6 +6,7 @@ Gemfile.lock
 doc
 pkg
 *.log
+*.json
 *.p12
 *.yml
 test/coverage
