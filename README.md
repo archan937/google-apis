@@ -20,10 +20,10 @@ Make sure you have created a Client ID (application type "Service account") at y
 
 Enable the API at your Console API page (https://console.developers.google.com/project/your_project_id/apiui/api).
 
-Do not forget to download the private key by generating a P12 key file.
+Do not forget to download the private key by generating a JSON key file.
 
 ```ruby
-[1] pry(main)> GoogleApis.connect :email_address => "lorem@developer.gserviceaccount.com", :private_key => "/path/to/private/key.p12"
+[1] pry(main)> GoogleApis.connect :email_address => "lorem@developer.gserviceaccount.com", :private_key => "/path/to/private/key.json"
 => #<GoogleApis::Connection:0x007fa5a4743668 [lorem@developer.gserviceaccount.com]>
 [2] pry(main)> bq = Google::BigQuery.new :project_id => "your_project_id", :dataset_id => "your_dataset_id"
 => #<Google::BigQuery:0x007fc5c68647a8 v2:[datasets,jobs,projects,tabledata,tables] {projectId:"your_project_id",datasetId:"your_dataset_id"}>
@@ -76,7 +76,7 @@ You can also configure an application-wide API connection. Let's say you also st
 ```yaml
 ---
   email_address: lorem@developer.gserviceaccount.com
-  private_key: "/path/to/private/key.p12"
+  private_key: "/path/to/private/key.json"
   project_id: your_project_id
   dataset_id: your_dataset_id
 ```
@@ -102,7 +102,7 @@ Please note that `Google::BigQuery.connection` is provided with several methods 
 The following example demonstrates how to download and upload a file from Google Storage:
 
 ```ruby
-[1] pry(main)> Google::Storage.connect :email_address => "lorem@developer.gserviceaccount.com", :private_key => "/path/to/private/key.p12"
+[1] pry(main)> Google::Storage.connect :email_address => "lorem@developer.gserviceaccount.com", :private_key => "/path/to/private/key.json"
 => #<Google::Storage:0x007fe522024f68 v1:[bucketAccessControls,buckets,channels,defaultObjectAccessControls,objectAccessControls,objects] {}>
 [2] pry(main)> metadata = Google::Storage.objects.list :bucket => "your-bucket", :prefix => "path/to/your/file/awesome.tsv"
 => {"kind"=>"storage#objects",
@@ -154,7 +154,7 @@ Easy, huh? :)
 Please make sure that you also have created a "Public API access" server key and added your IP to the allowed IPs at the [API credentials page](https://console.developers.google.com/project/your_project_id/apiui/credential).
 
 ```ruby
-[1] pry(main)> Google::Drive.connect :email_address => "lorem@developer.gserviceaccount.com", :private_key => "/path/to/private/key.p12"
+[1] pry(main)> Google::Drive.connect :email_address => "lorem@developer.gserviceaccount.com", :private_key => "/path/to/private/key.json"
 => #<Google::Drive:0x007f83ee39fcc8 v2:[about,apps,changes,channels,children,comments,files,parents,permissions,properties,realtime,replies,revisions] {}>
 [2] pry(main)> Google::Drive.files.list
 => {"kind"=>"drive#fileList",
@@ -173,7 +173,7 @@ If it isn't already clear, you can specify a global Google API connection and us
 ```yaml
 ---
   email_address: lorem@developer.gserviceaccount.com
-  private_key: "/path/to/private/key.p12"
+  private_key: "/path/to/private/key.json"
   project_id: your_project_id
   dataset_id: your_dataset_id
   bucket: your_bucket
@@ -205,8 +205,8 @@ Run the following command in your console:
 
 ```ruby
 $ script/console
-Loading Google APIs development environment (0.1.4)
-[1] pry(main)> GoogleApis.connect :email_address => "lorem@developer.gserviceaccount.com", :private_key => "/path/to/private/key.p12"
+Loading Google APIs development environment (0.2.0)
+[1] pry(main)> GoogleApis.connect :email_address => "lorem@developer.gserviceaccount.com", :private_key => "/path/to/private/key.json"
 => #<GoogleApis::Connection:0x007ff3d356cbf0 [lorem@developer.gserviceaccount.com]>
 [2] pry(main)> bq = Google::BigQuery.new :project_id => "your_project_id", :dataset_id => "your_dataset_id"
 => #<Google::BigQuery:0x007f8c09a05338 v2:[datasets,jobs,projects,tabledata,tables] {projectId:"your_project_id",datasetId:"your_dataset_id"}>
@@ -217,7 +217,7 @@ You can also define `script/config.yml` containing the connection config:
 ```yaml
 ---
   email_address: lorem@developer.gserviceaccount.com
-  private_key: "/path/to/private/key.p12"
+  private_key: "/path/to/private/key.json"
   project_id: your_project_id
   dataset_id: your_dataset_id
 ```
@@ -226,7 +226,7 @@ And immediately start instantiating a Google API:
 
 ```ruby
 $ script/console
-Loading Google APIs development environment (0.1.4)
+Loading Google APIs development environment (0.2.0)
 [1] pry(main)> Google::BigQuery.connection
 => #<Google::BigQuery:0x007fa6c9cc3450 v2:[datasets,jobs,projects,tabledata,tables] {projectId:"your_project_id",datasetId:"your_dataset_id"}>
 ```
